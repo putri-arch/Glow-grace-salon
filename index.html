@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glow & Grace Beauty Salon</title>
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- RESET & BASIC STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        :root {
+            --primary-color: #e8a598;
+            --secondary-color: #f7ebe8;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+        }
+
+        body {
+            color: var(--text-dark);
+            background-color: #fafafa;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- NAVBAR --- */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.2rem 8%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        /* --- HERO SLIDER --- */
+        .slider-container {
+            position: relative;
+            max-width: 100%;
+            height: 80vh;
+            overflow: hidden;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: var(--white);
+            padding: 0 1rem;
+            max-width: 800px;
+        }
+
+        .slide-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--white);
+            border-radius: 30px;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #d89184;
+            transform: translateY(-2px);
+        }
+
+        /* Navigation Arrows */
+        .prev, .next {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.5);
+            color: var(--text-dark);
+            padding: 1rem;
+            cursor: pointer;
+            border: none;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            transition: 0.3s;
+            z-index: 10;
+        }
+
+        .prev:hover, .next:hover {
+            background: var(--white);
+        }
+
+        .prev { left: 20px; }
+        .next { right: 20px; }
+
+        /* --- SECTIONS GENERAL --- */
+        section {
+            padding: 5rem 8%;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-light);
+            margin-bottom: 3rem;
+        }
+
+        /* --- SERVICES SECTION --- */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 25px rgba(232, 165, 152, 0.2);
+        }
+
+        .service-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            margin-bottom: 0.5rem;
+        }
+
+        .click-hint {
+            display: inline-block;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* --- MODAL POPUP LAYANAN --- */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            width: 100%;
+            max-width: 850px;
+            max-height: 90vh;
+            border-radius: 15px;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.2s;
+        }
+
+        .close-btn:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-header h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Modal Gallery Grid */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .gallery-item {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .gallery-item-info {
+            padding: 1rem;
+        }
+
+        .gallery-item-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.3rem;
+            color: var(--text-dark);
+        }
+
+        .gallery-item-info p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        /* --- ABOUT US SECTION & MAPS --- */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 350px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #222;
+            color: var(--white);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                right: 0;
+                top: 70px;
+                background-color: var(--white);
+                height: 0;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                overflow: hidden;
+                transition: height 0.3s ease-in-out;
+                box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+            }
+
+            .nav-links.active {
+                height: 200px;
+                padding: 1rem 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .slide-content h1 {
+                font-size: 2rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+        <nav>
+            <div class="logo">Glow & Grace</div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Layanan</a></li>
+                <li><a href="#about">About Us</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- HERO / SLIDER SECTION -->
+    <div class="slider-container" id="home">
+        <div class="slide active" style="background-image: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1200&q=80');">
+            <div class="slide-content">
+                <h1>Kecantikan Sejati Dimulai Di Sini</h1>
+                <p>Nikmati perawatan rambut dan wajah terbaik dari para ahli kami.</p>
+                <a href="#about" class="btn">Kunjungi Kami</a>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=1200&q=80');">
+            <div class="slide-content">
+                <h1>Perawatan Spa & Relaksasi</h1>
+                <p>Manjakan diri Anda setelah sepekan beraktivitas padat.</p>
+                <a href="#services" class="btn">Lihat Layanan</a>
+            </div>
+        </div>
+
+        <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80');">
+            <div class="slide-content">
+                <h1>Rias Wajah & Styling Modern</h1>
+                <p>Tampil memukau di setiap momen spesial Anda.</p>
+                <a href="#about" class="btn">Lokasi Salon</a>
+            </div>
+        </div>
+
+        <button class="prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <button class="next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <!-- SERVICES SECTION -->
+    <section id="services">
+        <h2 class="section-title">Layanan Kami</h2>
+        <p class="section-subtitle">Klik pada salah satu layanan untuk melihat sampel karya kami</p>
+        
+        <div class="services-grid">
+            <!-- Service 1: Hair Styling -->
+            <div class="service-card" onclick="openModal('hair-modal')">
+                <i class="fas fa-cut"></i>
+                <h3>Hair Styling & Cut</h3>
+                <p>Pemotongan dan penataan rambut profesional sesuai bentuk wajah Anda.</p>
+                <span class="click-hint">Lihat Foto & Detail <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Service 2: Facial -->
+            <div class="service-card" onclick="openModal('facial-modal')">
+                <i class="fas fa-spa"></i>
+                <h3>Facial & Skin Care</h3>
+                <p>Perawatan wajah menyeluruh untuk kulit lebih bersih, cerah, dan sehat.</p>
+                <span class="click-hint">Lihat Foto & Detail <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Service 3: Nails -->
+            <div class="service-card" onclick="openModal('nails-modal')">
+                <i class="fas fa-hand-sparkles"></i>
+                <h3>Manicure & Pedicure</h3>
+                <p>Perawatan kuku tangan dan kaki agar bersih, rapi, dan menawan.</p>
+                <span class="click-hint">Lihat Foto & Detail <i class="fas fa-arrow-right"></i></span>
+            </div>
+
+            <!-- Service 4: Makeup -->
+            <div class="service-card" onclick="openModal('makeup-modal')">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Makeup Artist</h3>
+                <p>Riasan cantik alami untuk acara wisuda, pernikahan, atau pesta.</p>
+                <span class="click-hint">Lihat Foto & Detail <i class="fas fa-arrow-right"></i></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- === MODAL POPUPS UNTUK TIAP LAYANAN === -->
+
+    <!-- Modal 1: Hair Styling & Cut -->
+    <div class="modal" id="hair-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('hair-modal')">&times;</span>
+            <div class="modal-header">
+                <h2>Hair Styling & Coloring</h2>
+                <p>Koleksi hasil pemotongan dan pewarnaan rambut terbaik kami</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" alt="Potongan Haircut Modern">
+                    <div class="gallery-item-info">
+                        <h4>Modern Layered Cut</h4>
+                        <p>Pemotongan gaya layered yang memberikan efek volume dan dimensi pada rambut lurus maupun bergelombang.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?auto=format&fit=crop&w=600&q=80" alt="Pewarnaan Hair Color Balayage">
+                    <div class="gallery-item-info">
+                        <h4>Balayage & Highlights</h4>
+                        <p>Teknik pewarnaan gradasi halus dengan nuansa ash/blonde yang natural dan tahan lama tanpa merusak akar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Facial & Skincare -->
+    <div class="modal" id="facial-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('facial-modal')">&times;</span>
+            <div class="modal-header">
+                <h2>Facial & Skin Care</h2>
+                <p>Perawatan kulit wajah intensif untuk meremajakan dan menyegarkan</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=80" alt="Glow Facial Treatment">
+                    <div class="gallery-item-info">
+                        <h4>Deep Cleansing & Glowing Facial</h4>
+                        <p>Membersihkan pori-pori secara mendalam, mengangkat sel kulit mati, dan mengembalikan kecerahan alami kulit.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1512290900673-7002ddb92812?auto=format&fit=crop&w=600&q=80" alt="Anti-Aging Massage">
+                    <div class="gallery-item-info">
+                        <h4>Relaxing Face Massage</h4>
+                        <p>Pijat relaksasi wajah untuk melancarkan sirkulasi darah dan mencegah penuaan dini pada kulit.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Manicure & Pedicure -->
+    <div class="modal" id="nails-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('nails-modal')">&times;</span>
+            <div class="modal-header">
+                <h2>Manicure & Pedicure</h2>
+                <p>Perawatan kuku estetik dan higienis</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?auto=format&fit=crop&w=600&q=80" alt="Nail Art Design">
+                    <div class="gallery-item-info">
+                        <h4>Custom Nail Art</h4>
+                        <p>Desain lukis kuku custom elegan sesuai dengan preferensi warna dan gaya acara Anda.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1519014816548-bf5fe059798b?auto=format&fit=crop&w=600&q=80" alt="Pedicure Spa">
+                    <div class="gallery-item-info">
+                        <h4>Spa Pedicure Treatment</h4>
+                        <p>Perawatan kuku kaki lengkap dengan perendaman air hangat, scrubbing halus, dan pijat relaksasi kaki.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Makeup Artist -->
+    <div class="modal" id="makeup-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal('makeup-modal')">&times;</span>
+            <div class="modal-header">
+                <h2>Professional Makeup</h2>
+                <p>Tampilan riasan sempurna untuk setiap momen spesial</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="Soft Glam Makeup">
+                    <div class="gallery-item-info">
+                        <h4>Soft Glam Party Makeup</h4>
+                        <p>Riasan lembut yang menonjolkan fitur alami wajah, sangat cocok untuk acara pesta dan gala dinner.</p>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&w=600&q=80" alt="Bridal Makeup">
+                    <div class="gallery-item-info">
+                        <h4>Bridal Makeup Look</h4>
+                        <p>Riasan pengantin tahan lama, anggun, dan flawless untuk memastikan Anda menjadi pusat perhatian di hari bahagia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT US & MAPS SECTION -->
+    <section id="about">
+        <h2 class="section-title">About Us</h2>
+        <p class="section-subtitle">Tentang salon kami dan di mana Anda bisa menemukan kami</p>
+
+        <div class="about-container">
+            <div class="about-text">
+                <h3>Selamat Datang di Glow & Grace</h3>
+                <p>Glow & Grace Salon hadir untuk memberikan pengalaman perawatan kecantikan terbaik dan paling nyaman bagi Anda. Didukung oleh kapster dan beautician berpengalaman, kami berkomitmen menjaga kecantikan alami Anda tetap bersinar.</p>
+                <p><strong><i class="fas fa-map-marker-alt"></i> Alamat:</strong><br>Jl. Sudirman No. 123, Jakarta Selatan, Indonesia</p>
+                <p><strong><i class="fas fa-clock"></i> Jam Operasional:</strong><br>Senin - Minggu: 09.00 - 20.00 WIB</p>
+            </div>
+            
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.2801267867623!2d106.82496417573177!3d-6.226750360980481!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e494a87a2d%3A0xb304b78efdd91a92!2sJl.%20Jend.%20Sudirman%2C%20Jakarta!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Glow & Grace Beauty Salon. All Rights Reserved.</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- 1. TOGGLE MOBILE MENU ---
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // --- 2. HERO SLIDER LOGIC ---
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            if (index >= slides.length) currentSlide = 0;
+            else if (index < 0) currentSlide = slides.length - 1;
+            else currentSlide = index;
+
+            slides[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() { showSlide(currentSlide + 1); }
+        function prevSlide() { showSlide(currentSlide - 1); }
+
+        nextBtn.addEventListener('click', () => { nextSlide(); resetTimer(); });
+        prevBtn.addEventListener('click', () => { prevSlide(); resetTimer(); });
+
+        function startTimer() { slideInterval = setInterval(nextSlide, 5000); }
+        function resetTimer() { clearInterval(slideInterval); startTimer(); }
+        startTimer();
+
+        // --- 3. MODAL POPUP LAYANAN LOGIC ---
+        function openModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Mengunci scroll halaman di belakang modal
+            }
+        }
+
+        function closeModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto'; // Mengembalikan scroll halaman
+            }
+        }
+
+        // Tutup modal jika user mengklik area luar modal (area hitam transparan)
+        window.addEventListener('click', (event) => {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>
